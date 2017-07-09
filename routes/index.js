@@ -47,7 +47,8 @@ router.get('/token',
         if (!err) {
           req.user.profile.displayName = user.body.displayName;
           req.user.profile.emails = [{ address: user.body.mail || user.body.userPrincipalName }];
-          renderSendMail(req, res);
+          // renderSendMail(req, res);
+          res.redirect('/');
         } else {
           renderError(err, res);
         }
