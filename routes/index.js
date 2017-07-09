@@ -15,7 +15,7 @@
 const express = require('express');
 const router = express.Router();
 const graphHelper = require('../utils/graphHelper.js');
-const emailer = require('../utils/emailer.js');
+// const emailer = require('../utils/emailer.js');
 const passport = require('passport');
 // ////const fs = require('fs');
 // ////const path = require('path');
@@ -26,7 +26,8 @@ router.get('/', (req, res) => {
   if (!req.isAuthenticated()) {
     res.render('login');
   } else {
-    renderSendMail(req, res);
+    //renderSendMail(req, res);
+    res.redirect('/file');
   }
 });
 
@@ -52,6 +53,14 @@ router.get('/token',
         }
       });
     });
+
+router.get('/file', (req, res) => {
+  const name = req.user.profile.displayName;
+  graphHelper.getUserFile(req.user.accessToken, (err, file) => {
+    console.log('File!');
+    res.render('file', { file: file.body.value, name: name });
+  });
+});
 
 // Load the sendMail page.
 function renderSendMail(req, res) {

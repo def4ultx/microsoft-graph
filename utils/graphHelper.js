@@ -100,8 +100,18 @@ function postSendMail(accessToken, message, callback) {
    });
 }
 
+function getUserFile(accessToken, callback) {
+  request
+   .get('https://graph.microsoft.com/beta/me/drive/root/children')
+   .set('Authorization', 'Bearer ' + accessToken)
+   .end((err, res) => {
+     callback(err, res);
+   });
+}
+
 exports.getUserData = getUserData;
 exports.getProfilePhoto = getProfilePhoto;
 exports.uploadFile = uploadFile;
 exports.getSharingLink = getSharingLink;
 exports.postSendMail = postSendMail;
+exports.getUserFile = getUserFile;
